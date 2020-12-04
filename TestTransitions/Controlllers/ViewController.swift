@@ -7,16 +7,29 @@
 
 import UIKit
 
+let colorNotificationKey = "co.onemandev.customColor"
+
 class ViewController: UIViewController {
-    
+    let color = Notification.Name(rawValue: colorNotificationKey)
     let button = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        createObserver()
     }
 
+    func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateColor(notification:)), name: color, object: nil)
+    }
+    
+    @objc
+    func updateColor(notification: Notification) {
+        self.view.backgroundColor = UIColor.systemPink
+    }
+
+    
     private func setup() {
         view.backgroundColor = UIColor.systemTeal
         button.setTitle("Press", for: .normal)
@@ -37,11 +50,15 @@ class ViewController: UIViewController {
     
     @objc
     func buttonPressed() {
-        guard let svc = storyboard?.instantiateViewController(identifier: "svc") else { return }
+        guard let svc = storyboard?.instantiateViewController(identifier: "svc") as? SecondViewController else { return }
         svc.transitioningDelegate = self
+        svc.modalPresentationStyle = .fullScreen
         present(svc, animated: true, completion: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension ViewController: UIViewControllerTransitioningDelegate {
@@ -49,7 +66,6 @@ extension ViewController: UIViewControllerTransitioningDelegate {
         return CustomPushAnimation()
     }
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return nil
+        return CutomPopAnimation()
     }
 }
-

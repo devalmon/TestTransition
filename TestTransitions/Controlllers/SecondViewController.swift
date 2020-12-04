@@ -8,15 +8,17 @@
 import UIKit
 
 class SecondViewController: UIViewController {
+    
+    var customColor = UIColor.systemPink
+    var customTransitionDelegate = CustomPushAnimation()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setup()
     }
     
     private func setup() {
-        self.view.backgroundColor = UIColor.systemPink
+        self.view.backgroundColor = customColor
     }
     /*
     // MARK: - Navigation
@@ -28,4 +30,9 @@ class SecondViewController: UIViewController {
     }
     */
 
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+//        let name = Notification.Name(rawValue: colorNotificationKey)
+//        NotificationCenter.default.post(name: name, object: nil)
+        self.dismiss(animated: true, completion: nil)
+    }
 }
