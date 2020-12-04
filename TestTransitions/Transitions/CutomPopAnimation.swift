@@ -23,9 +23,8 @@ class CutomPopAnimation: NSObject, UIViewControllerAnimatedTransitioning {
         let finalFrame = transitionContext.finalFrame(for: toVC)
         containerView.addSubview(toVC.view)
         
-        fromVC.view.alpha = 0.0
-        toVC.view.frame = finalFrame.offsetBy(dx: bounds.width, dy: 0)
         toVC.view.alpha = 0.0
+        toVC.view.frame = finalFrame.offsetBy(dx: bounds.width, dy: 0)
         fromVC.view.alpha = 1.0
         fromVC.view.frame = bounds
         
